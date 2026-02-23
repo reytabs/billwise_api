@@ -4,12 +4,6 @@ export class SearchBillDto {
   @IsOptional()
   name?: string;
 
-  // @IsOptional()
-  // author?: string;
-
-  // @IsOptional()
-  // category?: string;
-
   @IsOptional()
   @IsInt()
   page?: number;
@@ -17,4 +11,7 @@ export class SearchBillDto {
   @IsOptional()
   @IsInt()
   limit?: number;
+
+  @IsOptional()
+  user?: string;
 }

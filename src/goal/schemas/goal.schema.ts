@@ -4,15 +4,27 @@ import { User } from 'src/auth/schemas/user.schema';
 
 @Schema({
   timestamps: true,
+  toJSON: {
+    getters: true, // Enable getters to be used
+    virtuals: true,
+  },
 })
 export class Goal {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ type: SchemaTypes.Decimal128, required: true })
+  @Prop({
+    type: SchemaTypes.Decimal128,
+    required: true,
+    get: (v: any) => (v ? parseFloat(v.toString()) : null),
+  })
   target_amount: string;
 
-  @Prop({ type: SchemaTypes.Decimal128, required: true })
+  @Prop({
+    type: SchemaTypes.Decimal128,
+    required: true,
+    get: (v: any) => (v ? parseFloat(v.toString()) : null),
+  })
   current_amount: string;
 
   @Prop({ required: true })

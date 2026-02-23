@@ -7,7 +7,10 @@ import {
   Post,
   Put,
   Query,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
@@ -15,6 +18,7 @@ import { Account } from './schemas/account.schema';
 import { SearchAccountDto } from './dto/search-account.dto';
 
 @Controller('api/accounts')
+@UseGuards(JwtAuthGuard)
 export class AccountController {
   constructor(private accountService: AccountService) {}
 
@@ -24,8 +28,12 @@ export class AccountController {
   }
 
   @Post()
-  async createAccount(@Body() account: CreateAccountDto): Promise<Account> {
-    return this.accountService.create(account as any);
+  async createAccount(
+    @Body() account: CreateAccountDto,
+    @Req() req: any,
+  ): Promise<Account> {
+    const userId = req.user?.id || req.user?._id;
+    return this.accountService.create(account as any, userId);
   }
 
   @Get(':id')

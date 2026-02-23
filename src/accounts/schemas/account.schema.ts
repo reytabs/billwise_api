@@ -4,6 +4,10 @@ import { User } from 'src/auth/schemas/user.schema';
 
 @Schema({
   timestamps: true,
+  toJSON: {
+    getters: true, // Enable getters to be used
+    virtuals: true,
+  },
 })
 export class Account {
   @Prop({ required: true })
@@ -15,7 +19,11 @@ export class Account {
   @Prop({ required: true })
   account_type: string;
 
-  @Prop({ type: SchemaTypes.Decimal128, required: true })
+  @Prop({
+    type: SchemaTypes.Decimal128,
+    required: true,
+    get: (v: Types.Decimal128) => (v ? parseFloat(v.toString()) : null),
+  })
   current_balance: string;
 
   @Prop({ required: false })

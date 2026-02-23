@@ -9,5 +9,5 @@ export class CreateBillDto {
   readonly is_recurring: Boolean;
   readonly frequency: string;
   readonly notes: string;
-  readonly user: User;
+  readonly user?: User;
 }

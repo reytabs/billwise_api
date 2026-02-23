@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { GoalService } from './goal.service';
@@ -27,8 +28,12 @@ export class GoalController {
   }
 
   @Post()
-  async createGoal(@Body() goal: CreateGoalDto): Promise<Goal> {
-    return this.goalService.create(goal as any);
+  async createGoal(
+    @Body() goal: CreateGoalDto,
+    @Req() req: any,
+  ): Promise<Goal> {
+    const userId = req.user?.id || req.user?._id;
+    return this.goalService.create(goal as any, userId);
   }
 
   @Get(':id')

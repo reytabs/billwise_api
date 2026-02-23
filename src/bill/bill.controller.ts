@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { BillService } from './bill.service';
@@ -22,16 +23,23 @@ export class BillController {
   constructor(private billService: BillService) {}
 
   @Get()
-  async getAllBills(@Query() query: SearchBillDto): Promise<Bill[]> {
-    return this.billService.findAll(query);
+  async getAllBills(
+    @Query() query: SearchBillDto,
+    @Req() req: any,
+  ): Promise<Bill[]> {
+    query.user = req.user?.id || req.user?._id;
+    return this.billService.findAll({ ...query } as any);
   }
 
   @Post()
   async createBill(
     @Body()
     bill: CreateBillDto,
+    @Req() req: any,
   ): Promise<Bill> {
-    return this.billService.create(bill);
+    const userId = req.user?.id || req.user?._id;
+    console.log('Creating bill for user:', userId);
+    return this.billService.create(bill as any, userId);
   }
 
   @Get(':id')

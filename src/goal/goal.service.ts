@@ -27,8 +27,9 @@ export class GoalService {
     return res;
   }
 
-  async create(goal: Goal): Promise<Goal> {
-    const res = await this.goalModel.create(goal);
+  async create(goal: Goal, userId: string): Promise<Goal> {
+    const toCreate = { ...goal, user: userId } as any;
+    const res = await this.goalModel.create(toCreate);
     if (!res) throw new NotFoundException('Goal could not be created.');
     return res;
   }

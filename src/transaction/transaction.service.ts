@@ -29,8 +29,9 @@ export class TransactionService {
     return res;
   }
 
-  async create(transaction: Transaction): Promise<Transaction> {
-    const res = await this.transactionModel.create(transaction);
+  async create(transaction: Transaction, userId: string): Promise<Transaction> {
+    const toCreate = { ...transaction, user: userId } as any;
+    const res = await this.transactionModel.create(toCreate);
     if (!res) throw new NotFoundException('Transaction could not be created.');
     return res;
   }

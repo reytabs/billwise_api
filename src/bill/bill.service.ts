@@ -12,12 +12,13 @@ export class BillService {
   ) {}
 
   async findAll(query: SearchBillDto): Promise<Bill[]> {
-    const resPerPage = 2;
+    const resPerPage = 10;
     const page = query.page || 1;
     const skip = resPerPage * (page - 1);
 
     const filter: any = {};
-    if (query.name) filter.title = new RegExp(query.name, 'i');
+    if (query.name) filter.name = new RegExp(query.name, 'i');
+    if (query.user) filter.user = new RegExp(query.user, 'i');
 
     const res = await this.billModel
       .find(filter)
@@ -27,8 +28,9 @@ export class BillService {
     return res;
   }
 
-  async create(book: Bill): Promise<Bill> {
-    const res = await this.billModel.create(book);
+  async create(bill: Bill, userId: string): Promise<Bill> {
+    const toCreate = { ...bill, user: userId } as any;
+    const res = await this.billModel.create(toCreate);
 
     if (!res) throw new NotFoundException('Bill could not be created.');
 

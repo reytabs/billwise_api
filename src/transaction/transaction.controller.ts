@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
@@ -31,8 +32,10 @@ export class TransactionController {
   @Post()
   async createTransaction(
     @Body() transaction: CreateTransactionDto,
+    @Req() req: any,
   ): Promise<Transaction> {
-    return this.transactionService.create(transaction as any);
+    const userId = req.user?.id || req.user?._id;
+    return this.transactionService.create(transaction as any, userId);
   }
 
   @Get(':id')

@@ -28,8 +28,9 @@ export class AccountService {
     return res;
   }
 
-  async create(account: Account): Promise<Account> {
-    const res = await this.accountModel.create(account);
+  async create(account: Account, userId: string): Promise<Account> {
+    const toCreate = { ...account, user: userId } as any;
+    const res = await this.accountModel.create(toCreate);
     if (!res) throw new NotFoundException('Account could not be created.');
     return res;
   }
