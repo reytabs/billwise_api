@@ -36,7 +36,7 @@ export class BillController {
     @Body()
     bill: CreateBillDto,
     @Req() req: any,
-  ): Promise<Bill> {
+  ): Promise<Bill | Bill[]> {
     const userId = req.user?.id || req.user?._id;
     console.log('Creating bill for user:', userId);
     return this.billService.create(bill as any, userId);

@@ -25,7 +25,12 @@ export class TransactionController {
   @Get()
   async getAllTransactions(
     @Query() query: SearchTransactionDto,
+    @Req() req: any,
   ): Promise<Transaction[]> {
+    const userId = req.user?.id || req.user?._id;
+    if (userId) {
+      query.user = userId;
+    }
     return this.transactionService.findAll(query);
   }
 
@@ -54,5 +59,27 @@ export class TransactionController {
   @Delete(':id')
   async deleteTransaction(@Param('id') id: string): Promise<Transaction> {
     return this.transactionService.deleteById(id);
+  }
+
+  @Get('stats/summary')
+  async getTransactionStats(
+    @Req() req: any,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    const userId = req.user?.id || req.user?._id;
+    const start = startDate ? new Date(startDate) : undefined;
+    const end = endDate ? new Date(endDate) : undefined;
+    return this.transactionService.getTransactionStats(userId, start, end);
+  }
+
+  @Get('type/:type')
+  async getTransactionsByType(
+    @Param('type') type: string,
+    @Req() req: any,
+    @Query('limit') limit?: number,
+  ): Promise<Transaction[]> {
+    const userId = req.user?.id || req.user?._id;
+    return this.transactionService.getTransactionsByType(userId, type, limit);
   }
 }

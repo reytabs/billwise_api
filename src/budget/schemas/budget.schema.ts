@@ -18,6 +18,21 @@ export class Budget {
     get: (v: any) => (v ? parseFloat(v.toString()) : null),
   })
   budget_amount: string;
+
+  @Prop({ required: true })
+  month: number;
+
+  @Prop({ required: true })
+  year: number; 
+
+  @Prop({ required: true })
+  account_id: string;
+
+  @Prop({ required: false })
+  user_id: string;
+  
+  @Prop({ required: false })
+  goal_id?: string;
 }
 
 export const BudgetSchema = SchemaFactory.createForClass(Budget);

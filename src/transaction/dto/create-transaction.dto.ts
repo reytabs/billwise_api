@@ -1,11 +1,31 @@
-import { Types } from 'mongoose';
+import { IsNotEmpty, IsString, IsNumber, IsDateString, IsOptional, IsMongoId } from 'class-validator';
 
 export class CreateTransactionDto {
+  @IsNotEmpty()
+  @IsString()
   readonly transaction_name: string;
-  readonly amount: string;
-  readonly date: Date;
+
+  @IsNotEmpty()
+  @IsNumber()
+  readonly amount: number;
+
+  @IsNotEmpty()
+  @IsDateString()
+  readonly date: string;
+
+  @IsNotEmpty()
+  @IsString()
   readonly transaction_type: string;
+
+  @IsNotEmpty()
+  @IsString()
   readonly category: string;
-  readonly bank_account?: Types.ObjectId;
-  readonly user?: Types.ObjectId;
+
+  @IsOptional()
+  @IsMongoId()
+  readonly bank_account?: string;
+
+  @IsOptional()
+  @IsMongoId()
+  readonly user?: string;
 }

@@ -5,7 +5,7 @@ export class CreateAccountDto {
   readonly bank_name: string;
   readonly account_type: string;
   readonly current_balance: string;
-  readonly last_4_digits?: string;
+  readonly last_four_digits?: string;
 
   readonly user: User;
 }

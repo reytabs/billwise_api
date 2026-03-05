@@ -27,7 +27,7 @@ export class Account {
   current_balance: string;
 
   @Prop({ required: false })
-  last_4_digits?: string;
+  last_four_digits?: string;
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
   user: User;

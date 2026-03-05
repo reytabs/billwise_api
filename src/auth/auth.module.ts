@@ -13,8 +13,18 @@ import { ConfigService } from '@nestjs/config';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
+        // older env file used JWT_TOKEN, newer code expects JWT_SECRET
+        const secret =
+          configService.get<string>('JWT_SECRET') ||
+          configService.get<string>('JWT_TOKEN');
+
+        if (!secret) {
+          // prevent the JWT library from throwing a generic error
+          throw new Error('JWT secret must be configured (JWT_SECRET or JWT_TOKEN)');
+        }
+
         return {
-          secret: configService.get<string>('JWT_SECRET'),
+          secret,
           signOptions: {
             expiresIn: configService.get<string>(
               'JWT_EXPIRES_IN',
