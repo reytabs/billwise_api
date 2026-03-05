@@ -9,7 +9,7 @@ import { Document } from 'mongoose';
   },
 })
 export class Budget {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   category: string;
 
   @Prop({
@@ -19,19 +19,19 @@ export class Budget {
   })
   budget_amount: string;
 
-  @Prop({ required: true })
+  @Prop({ type: Number, required: true })
   month: number;
 
-  @Prop({ required: true })
+  @Prop({ type: Number, required: true })
   year: number; 
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   account_id: string;
 
-  @Prop({ required: false })
+  @Prop({ type: String, required: false })
   user_id: string;
   
-  @Prop({ required: false })
+  @Prop({ type: String, required: false })
   goal_id?: string;
 }
 

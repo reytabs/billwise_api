@@ -9,10 +9,10 @@ export enum Type {
   timestamps: true,
 })
 export class Category {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   name: string;
 
-  @Prop()
+  @Prop({ type: String, enum: Type, required: true })
   type: Type;
 }
 

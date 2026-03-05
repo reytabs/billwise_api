@@ -10,7 +10,7 @@ import { User } from 'src/auth/schemas/user.schema';
   },
 })
 export class Bill {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   name: string;
 
   @Prop({
@@ -20,22 +20,22 @@ export class Bill {
   })
   amount: string;
 
-  @Prop({ required: true })
+  @Prop({ type: Date, required: true })
   due_date: Date;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   category: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, default: 'pending' })
   status: string;
 
-  @Prop()
+  @Prop({ type: Boolean, default: false })
   is_recurring: Boolean;
 
-  @Prop()
+  @Prop({ type: String })
   frequency: string;
 
-  @Prop()
+  @Prop({ type: String })
   notes: string;
 
   // Foreign key reference to User

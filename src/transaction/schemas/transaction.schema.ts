@@ -10,7 +10,7 @@ import { User } from 'src/auth/schemas/user.schema';
   },
 })
 export class Transaction {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   transaction_name: string;
 
   @Prop({
@@ -20,13 +20,13 @@ export class Transaction {
   })
   amount: string;
 
-  @Prop({ required: true })
+  @Prop({ type: Date, required: true })
   date: Date;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   transaction_type: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   category: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Account', required: false })

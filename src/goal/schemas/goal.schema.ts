@@ -10,7 +10,7 @@ import { User } from 'src/auth/schemas/user.schema';
   },
 })
 export class Goal {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   name: string;
 
   @Prop({
@@ -27,10 +27,10 @@ export class Goal {
   })
   current_amount: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   category: string;
 
-  @Prop({ required: true })
+  @Prop({ type: Date, required: true })
   target_date: Date;
 
   // optional user reference for ownership

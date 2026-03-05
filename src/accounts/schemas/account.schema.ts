@@ -10,13 +10,13 @@ import { User } from 'src/auth/schemas/user.schema';
   },
 })
 export class Account {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   account_name: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   bank_name: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   account_type: string;
 
   @Prop({
@@ -26,7 +26,7 @@ export class Account {
   })
   current_balance: string;
 
-  @Prop({ required: false })
+  @Prop({ type: String, required: false })
   last_four_digits?: string;
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
